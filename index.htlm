@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffeef2;
+            text-align: center;
+        }
+
+        #container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #d63384;
+            margin-bottom: 1.5rem;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease-in-out;
+        }
+
+        #yesBtn {
+            background-color: #4caf50;
+            color: white;
+            font-size: 16px;
+        }
+
+        #noBtn {
+            background-color: #f44336;
+            color: white;
+            font-size: 16px;
+        }
+
+        .gif-container img {
+            width: 200px;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="question-section">
+            <div class="gif-container">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eXp6bm9ra29qbmZueGtxbmZueGtxbmZueGtxbmZueGtxJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/c76IJLufpN61i/giphy.gif" alt="Cute cat">
+            </div>
+            <h1>Will you be my Valentine?</h1>
+            <div class="buttons">
+                <button id="yesBtn" onclick="celebrate()">Yes</button>
+                <button id="noBtn" onclick="shrinkNo()">No</button>
+            </div>
+        </div>
+
+        <div id="success-section" class="hidden">
+            <div class="gif-container">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3pueGtxbmZueGtxbmZueGtxbmZueGtxbmZueGtxbmZueGtxJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l41lH4ADRtAYnGsLe/giphy.gif" alt="Happy dance">
+            </div>
+            <h1>Yay! See you on the 14th! ❤️</h1>
+        </div>
+    </div>
+
+    <script>
+        let yesSize = 16;
+        let noSize = 16;
+
+        function shrinkNo() {
+            // Make Yes bigger
+            yesSize += 20;
+            document.getElementById('yesBtn').style.fontSize = yesSize + 'px';
+            document.getElementById('yesBtn').style.padding = (yesSize/2) + 'px ' + (yesSize) + 'px';
+
+            // Make No smaller
+            noSize = Math.max(noSize - 2, 4); // Don't let it disappear entirely
+            document.getElementById('noBtn').style.fontSize = noSize + 'px';
+            document.getElementById('noBtn').style.opacity = noSize / 16;
+        }
+
+        function celebrate() {
+            document.getElementById('question-section').classList.add('hidden');
+            document.getElementById('success-section').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
