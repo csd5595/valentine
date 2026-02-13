@@ -1,104 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="el">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Question 💜</title>
+    <title>Θέλεις να γίνεις το Valentine μου; 💜</title>
     <style>
         :root {
-            --bg-color: #f3e5f5;
-            --primary-purple: #9c27b0;
-            --accent-purple: #e1bee7;
-            --text-color: #4a148c;
+            --dark-purple: #4a148c;
+            --medium-purple: #9c27b0;
+            --light-purple: #f3e5f5;
+            --accent-pink: #ff80ab;
         }
 
         body {
+            margin: 0;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
-            background-color: var(--bg-color);
-            text-align: center;
+            background-color: var(--light-purple);
+            font-family: 'Comic Sans MS', cursive, sans-serif;
             overflow: hidden;
         }
 
-        /* Initial Popup Overlay */
+        /* Animation για τις καρδιές που πέφτουν */
+        .heart {
+            position: absolute;
+            top: -20px;
+            font-size: 20px;
+            user-select: none;
+            z-index: -1;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        /* Popup αρχικής ερώτησης */
         #overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-color);
+            inset: 0;
+            background: var(--dark-purple);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 100;
-            transition: opacity 0.5s ease;
+            z-index: 1000;
+            transition: opacity 0.5s;
         }
 
-        .popup {
+        .popup-box {
             background: white;
-            padding: 2.5rem;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 3px solid var(--primary-purple);
-        }
-
-        /* Main Content (Hidden at first) */
-        #main-content {
-            opacity: 0;
-            transition: opacity 1s ease;
-            display: none; /* Changed via JS */
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #container {
-            background: white;
-            padding: 3rem 2rem;
+            padding: 40px;
             border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(156, 39, 176, 0.2);
-            max-width: 450px;
-            width: 85%;
-            border: 4px solid var(--accent-purple);
-            animation: float 3s ease-in-out infinite;
+            text-align: center;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+            border: 5px solid var(--accent-pink);
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        /* Κύρια Κάρτα */
+        #main-content {
+            display: none;
+            opacity: 0;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
         }
 
-        .buttons {
+        .card {
+            background: white;
+            padding: 40px 20px;
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(156, 39, 176, 0.3);
+            border: 4px solid var(--medium-purple);
+            position: relative;
+        }
+
+        .gif-container img {
+            width: 200px;
+            height: 200px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+
+        h1 { color: var(--dark-purple); margin: 10px 0; }
+        .description { color: #555; font-size: 1rem; margin-bottom: 25px; line-height: 1.4; }
+
+        .btn-group {
             display: flex;
-            gap: 15px;
             justify-content: center;
             align-items: center;
-            margin-top: 20px;
+            gap: 20px;
+            min-height: 100px;
         }
 
         button {
-            padding: 12px 25px;
+            padding: 15px 30px;
             border: none;
             border-radius: 50px;
-            cursor: pointer;
+            font-size: 1.2rem;
             font-weight: bold;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            transition: transform 0.2s;
         }
 
-        .start-btn { background: var(--primary-purple); color: white; font-size: 1.2rem; }
-        #yesBtn { background-color: #66bb6a; color: white; font-size: 1.1rem; }
-        #noBtn { background-color: #ef5350; color: white; font-size: 1.1rem; }
-
-        .gif-container img {
-            width: 180px;
-            border-radius: 20px;
-            margin-bottom: 1rem;
-            border: 3px solid var(--accent-purple);
-        }
+        #yesBtn { background: #4caf50; color: white; }
+        #noBtn { background: #f44336; color: white; position: absolute; }
 
         .hidden { display: none; }
     </style>
@@ -110,69 +118,85 @@
     </audio>
 
     <div id="overlay">
-        <div class="popup">
-            <h2>Can I ask you something? ✨</h2>
-            <button class="start-btn" onclick="startPage()">Yes, of course!</button>
+        <div class="popup-box">
+            <h2 style="color: var(--dark-purple)">Γεια σου! ✨</h2>
+            <p>Έχω μια ερώτηση... μπορώ να την κάνω;</p>
+            <button onclick="startApp()" style="background: var(--medium-purple); color: white;">Φυσικά! 😍</button>
         </div>
     </div>
 
     <div id="main-content">
-        <div id="container">
+        <div class="card">
             <div id="question-section">
                 <div class="gif-container">
-                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eXp6bm9ra29qbmZueGtxbmZueGtxbmZueGtxbmZueGtxJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/c76IJLufpN61i/giphy.gif" alt="Cute cat">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eXp6bm9ra29qbmZueGtxbmZueGtxbmZueGtxbmZueGtxJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/c76IJLufpN61i/giphy.gif" alt="Cute GIF">
                 </div>
-                <h1 style="color: var(--text-color);">Will you be my Valentine? 💜</h1>
-                <div class="buttons">
-                    <button id="yesBtn" onclick="celebrate()">Yes!</button>
-                    <button id="noBtn" onclick="shrinkNo()">No</button>
+                <h1>Will you be my Valentine? 💜</h1>
+                <p class="description">
+                    Υπόσχομαι μια μέρα γεμάτη γέλια, την αγαπημένη σου σοκολάτα 
+                    και την πιο ζεστή αγκαλιά! 🍫✨
+                </p>
+                <div class="btn-group">
+                    <button id="yesBtn" onclick="celebrate()">ΝΑΙ!</button>
+                    <button id="noBtn" onmouseover="moveNo()">Όχι</button>
                 </div>
             </div>
 
             <div id="success-section" class="hidden">
                 <div class="gif-container">
-                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3pueGtxbmZueGtxbmZueGtxbmZueGtxbmZueGtxbmZueGtxJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l41lH4ADRtAYnGsLe/giphy.gif" alt="Happy dance">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3pueGtxbmZueGtxbmZueGtxbmZueGtxbmZueGtxbmZueGtxJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l41lH4ADRtAYnGsLe/giphy.gif" alt="Happy GIF">
                 </div>
-                <h1 style="color: #9c27b0;">Yay! Best decision ever! ✨💜</h1>
+                <h1 style="color: var(--medium-purple);">ΤΟ ΗΞΕΡΑ! 😍✨</h1>
+                <p>Ετοιμάσου, η 14η Φεβρουαρίου θα είναι μαγική!</p>
             </div>
         </div>
     </div>
 
     <script>
-        let yesSize = 1.1;
-        let noSize = 1.1;
+        let scale = 1;
 
-        function startPage() {
-            // Play Music
-            const music = document.getElementById('bgMusic');
-            music.play();
-
-            // Hide Overlay and Show Content
+        function startApp() {
+            document.getElementById('bgMusic').play();
             document.getElementById('overlay').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('overlay').style.display = 'none';
-                const content = document.getElementById('main-content');
-                content.style.display = 'flex';
-                setTimeout(() => content.style.opacity = '1', 50);
+                const main = document.getElementById('main-content');
+                main.style.display = 'block';
+                setTimeout(() => main.style.opacity = '1', 50);
+                setInterval(createHeart, 300); // Ξεκινάει η βροχή από καρδιές
             }, 500);
         }
 
-        function shrinkNo() {
-            yesSize += 0.4;
-            const yesBtn = document.getElementById('yesBtn');
-            yesBtn.style.fontSize = yesSize + 'rem';
-            yesBtn.style.padding = (yesSize * 10) + 'px ' + (yesSize * 25) + 'px';
+        function moveNo() {
+            // Μεγαλώνει το "Ναι"
+            scale += 0.3;
+            document.getElementById('yesBtn').style.transform = `scale(${scale})`;
 
-            noSize = Math.max(noSize - 0.15, 0.5);
+            // Το "Όχι" πηδάει σε τυχαία θέση
             const noBtn = document.getElementById('noBtn');
-            noBtn.style.fontSize = noSize + 'rem';
-            noBtn.style.opacity = noSize;
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 100);
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+            noBtn.style.position = 'fixed';
         }
 
         function celebrate() {
             document.getElementById('question-section').classList.add('hidden');
             document.getElementById('success-section').classList.remove('hidden');
             document.body.style.backgroundColor = "#e1bee7";
+            for(let i=0; i<30; i++) setTimeout(createHeart, i*100); // Πολλές καρδιές στο τέλος!
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            const hearts = ['💜', '💖', '✨', '🌸'];
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
         }
     </script>
 </body>
