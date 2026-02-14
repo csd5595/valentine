@@ -10,9 +10,9 @@
             --medium-purple: #9c27b0;
             --light-purple: #f3e5f5;
             --accent-pink: #ff80ab;
-            /* Νέα χρώματα για κουμπιά */
-            --yes-purple: #7b1fa2; 
-            --no-purple: #ba68c8;
+            /* Νέα Έντονα Μωβ Χρώματα */
+            --bright-purple-yes: #9d00ff; /* Έντονο Neon Μωβ */
+            --vivid-purple-no: #d883ff;  /* Ζωντανό Λιλά */
         }
 
         body {
@@ -119,14 +119,24 @@
             font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
-            color: white; /* Λευκά γράμματα για αντίθεση */
+            color: white;
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            /* Έντονη σκιά για να "πετάνε" τα κουμπιά */
+            box-shadow: 0 6px 20px rgba(157, 0, 255, 0.3);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
-        /* Μωβ Κουμπιά */
-        #yesBtn { background: var(--yes-purple); z-index: 10; }
-        #noBtn { background: var(--no-purple); z-index: 5; }
+        #yesBtn { 
+            background: var(--bright-purple-yes); 
+            z-index: 10;
+            border: 2px solid #fff;
+        }
+
+        #noBtn { 
+            background: var(--vivid-purple-no); 
+            z-index: 5;
+            border: 2px solid #fff;
+        }
 
         .hidden { display: none; }
     </style>
@@ -141,7 +151,7 @@
         <div class="popup-box">
             <h2 style="color: var(--dark-purple)">Αν και έχει πάει αργά, μπορώ να σε ρωτήσω κάτι;</h2>
             <p>get ready ✨</p>
-            <button onclick="startApp()" style="background: var(--medium-purple); color: white;">Εννοείται! 😍</button>
+            <button onclick="startApp()" style="background: var(--bright-purple-yes); color: white;">Εννοείται! 😍</button>
         </div>
     </div>
 
@@ -150,7 +160,7 @@
             
             <div id="question-section">
                 <div class="media-container">
-                    <img src="photo.jepg" alt="Our Photo">
+                    <img src="photo.jpeg" alt="Our Photo">
                 </div>
                 <h1>Will you be my Valentine? 💜</h1>
                 <p class="description">ετοιμασου για τρελα παιχνιδια</p>
