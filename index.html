@@ -23,7 +23,6 @@
             overflow: hidden;
         }
 
-        /* Animation για τις καρδιές που πέφτουν */
         .heart {
             position: absolute;
             top: -20px;
@@ -37,7 +36,6 @@
             to { transform: translateY(110vh) rotate(360deg); }
         }
 
-        /* Popup αρχικής ερώτησης */
         #overlay {
             position: fixed;
             inset: 0;
@@ -58,7 +56,6 @@
             border: 5px solid var(--accent-pink);
         }
 
-        /* Κύρια Κάρτα */
         #main-content {
             display: none;
             opacity: 0;
@@ -76,12 +73,14 @@
             position: relative;
         }
 
-        .gif-container img {
-            width: 200px;
-            height: 200px;
+        /* Styling για το βίντεο */
+        .media-container video, .media-container img {
+            width: 250px;
+            height: 250px;
             border-radius: 20px;
             margin-bottom: 20px;
             object-fit: cover;
+            border: 3px solid var(--accent-pink);
         }
 
         h1 { color: var(--dark-purple); margin: 10px 0; }
@@ -119,7 +118,7 @@
 
     <div id="overlay">
         <div class="popup-box">
-            <h2 style="color: var(--dark-purple)"> get ready </h2>
+            <h2 style="color: var(--dark-purple)">get ready</h2>
             <p>εισαι ετοιμη ;;</p>
             <button onclick="startApp()" style="background: var(--medium-purple); color: white;">οχι</button>
         </div>
@@ -128,13 +127,13 @@
     <div id="main-content">
         <div class="card">
             <div id="question-section">
-                <div class="gif-container">
-                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eXp6bm9ra29qbmZueGtxbmZueGtxbmZueGtxbmZueGtxJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/c76IJLufpN61i/giphy.gif" alt="Cute GIF">
+                <div class="media-container">
+                    <video id="v-clip" autoplay loop muted playsinline>
+                        <source src="eirini.mov" type="video/quicktime">
+                    </video>
                 </div>
                 <h1>Will you be my Valentine? 💜</h1>
-                <p class="description">
-                    ετοιμασου για τρελα παιχνιδια
-                </p>
+                <p class="description">ετοιμασου για τρελα παιχνιδια</p>
                 <div class="btn-group">
                     <button id="yesBtn" onclick="celebrate()">ΝΑΙ!</button>
                     <button id="noBtn" onmouseover="moveNo()">Όχι</button>
@@ -142,11 +141,11 @@
             </div>
 
             <div id="success-section" class="hidden">
-                <div class="gif-container">
+                <div class="media-container">
                     <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3pueGtxbmZueGtxbmZueGtxbmZueGtxbmZueGtxbmZueGtxJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l41lH4ADRtAYnGsLe/giphy.gif" alt="Happy GIF">
                 </div>
                 <h1 style="color: var(--medium-purple);">εμενα με ρωτησες;;;</h1>
-                <p> πλακιτσα 🙂‍↔️ </p>
+                <p>πλακιτσα 🙂‍↔️</p>
             </div>
         </div>
     </div>
@@ -156,22 +155,22 @@
 
         function startApp() {
             document.getElementById('bgMusic').play();
+            // Ξεκινάει και το βίντεο αν δεν ξεκίνησε αυτόματα
+            document.getElementById('v-clip').play();
+            
             document.getElementById('overlay').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('overlay').style.display = 'none';
                 const main = document.getElementById('main-content');
                 main.style.display = 'block';
                 setTimeout(() => main.style.opacity = '1', 50);
-                setInterval(createHeart, 300); // Ξεκινάει η βροχή από καρδιές
+                setInterval(createHeart, 300);
             }, 500);
         }
 
         function moveNo() {
-            // Μεγαλώνει το "Ναι"
             scale += 0.3;
             document.getElementById('yesBtn').style.transform = `scale(${scale})`;
-
-            // Το "Όχι" πηδάει σε τυχαία θέση
             const noBtn = document.getElementById('noBtn');
             const x = Math.random() * (window.innerWidth - 150);
             const y = Math.random() * (window.innerHeight - 100);
@@ -184,7 +183,7 @@
             document.getElementById('question-section').classList.add('hidden');
             document.getElementById('success-section').classList.remove('hidden');
             document.body.style.backgroundColor = "#e1bee7";
-            for(let i=0; i<30; i++) setTimeout(createHeart, i*100); // Πολλές καρδιές στο τέλος!
+            for(let i=0; i<30; i++) setTimeout(createHeart, i*100);
         }
 
         function createHeart() {
