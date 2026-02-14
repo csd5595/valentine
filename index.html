@@ -10,6 +10,9 @@
             --medium-purple: #9c27b0;
             --light-purple: #f3e5f5;
             --accent-pink: #ff80ab;
+            /* Νέα χρώματα για κουμπιά */
+            --yes-purple: #7b1fa2; 
+            --no-purple: #ba68c8;
         }
 
         body {
@@ -23,7 +26,6 @@
             overflow: hidden;
         }
 
-        /* Animation για τις καρδιές */
         .heart {
             position: absolute;
             top: -20px;
@@ -36,7 +38,6 @@
             to { transform: translateY(110vh) rotate(360deg); }
         }
 
-        /* Αρχικό Παράθυρο (Overlay) */
         #overlay {
             position: fixed;
             inset: 0;
@@ -59,7 +60,6 @@
             max-width: 400px;
         }
 
-        /* Κύριο Περιεχόμενο */
         #main-content {
             display: none;
             opacity: 0;
@@ -88,7 +88,6 @@
             margin-bottom: 15px;
         }
 
-        /* Ρυθμίσεις για GIF/WebP και το iPhone Βίντεο */
         .media-container video, .media-container img {
             width: auto;
             max-width: 100%;
@@ -120,11 +119,14 @@
             font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
+            color: white; /* Λευκά γράμματα για αντίθεση */
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        #yesBtn { background: #4caf50; color: white; z-index: 10; }
-        #noBtn { background: #f44336; color: white; z-index: 5; }
+        /* Μωβ Κουμπιά */
+        #yesBtn { background: var(--yes-purple); z-index: 10; }
+        #noBtn { background: var(--no-purple); z-index: 5; }
 
         .hidden { display: none; }
     </style>
@@ -148,7 +150,7 @@
             
             <div id="question-section">
                 <div class="media-container">
-                    <img src="mouse_dancing.webp" alt="Cute Mouse">
+                    <img src="photo.jepg" alt="Our Photo">
                 </div>
                 <h1>Will you be my Valentine? 💜</h1>
                 <p class="description">ετοιμασου για τρελα παιχνιδια</p>
@@ -174,7 +176,6 @@
         let scale = 1;
         let isMoving = false;
 
-        // Συνάρτηση που ξεκινάει τη σελίδα
         function startApp() {
             document.getElementById('bgMusic').play();
             document.getElementById('overlay').style.opacity = '0';
@@ -183,11 +184,10 @@
                 const main = document.getElementById('main-content');
                 main.style.display = 'block';
                 setTimeout(() => main.style.opacity = '1', 50);
-                setInterval(createHeart, 300); // Ξεκινάει η βροχή καρδιών
+                setInterval(createHeart, 300);
             }, 500);
         }
 
-        // Συνάρτηση για το "Όχι" που τρέχει και το "Ναι" που μεγαλώνει
         function moveNo() {
             scale += 0.5; 
             const yesBtn = document.getElementById('yesBtn');
@@ -210,7 +210,6 @@
             noBtn.style.top = randomY + 'px';
         }
 
-        // Συνάρτηση για το ΝΑΙ
         function celebrate() {
             document.getElementById('question-section').classList.add('hidden');
             document.getElementById('success-section').classList.remove('hidden');
@@ -218,12 +217,11 @@
             document.body.style.backgroundColor = "#e1bee7";
             
             const v = document.getElementById('success-video');
-            v.play(); // Ξεκινάει το βίντεο της Ειρήνης
+            v.play(); 
 
             for(let i=0; i<30; i++) setTimeout(createHeart, i*100);
         }
 
-        // Δημιουργία καρδιών στο φόντο
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
