@@ -80,7 +80,7 @@
             margin-bottom: 20px;
             object-fit: cover;
             border: 3px solid var(--accent-pink);
-            background-color: #eee; /* Light gray until video loads */
+            background-color: #eee;
         }
 
         h1 { color: var(--dark-purple); margin: 10px 0; }
@@ -91,7 +91,7 @@
             justify-content: center;
             align-items: center;
             gap: 20px;
-            min-height: 100px;
+            min-height: 150px; /* Χώρος για το κουμπί που μεγαλώνει */
         }
 
         button {
@@ -104,7 +104,7 @@
             transition: transform 0.2s;
         }
 
-        #yesBtn { background: #4caf50; color: white; position: relative; }
+        #yesBtn { background: #4caf50; color: white; position: relative; z-index: 10; }
         #noBtn { background: #f44336; color: white; position: absolute; }
 
         .hidden { display: none; }
@@ -118,13 +118,88 @@
 
     <div id="overlay">
         <div class="popup-box">
-            <h2 style="color: var(--dark-purple)">Αν και εχει παει αργα, μπορω να σε ρωτησω κατι ;</h2>
-            <p> get ready </p>
-            <button onclick="startApp()" style="background: var(--medium-purple); color: white;">οχι</button>
+            <h2 style="color: var(--dark-purple)">Αν και έχει πάει αργά, μπορώ να σε ρωτήσω κάτι;</h2>
+            <p>get ready ✨</p>
+            <button onclick="startApp()" style="background: var(--medium-purple); color: white;">Εννοείται! 😍</button>
         </div>
     </div>
 
     <div id="main-content">
         <div class="card">
             <div id="question-section">
-                <div class="media-
+                <div class="media-container">
+                    <video id="v-clip" loop muted playsinline preload="auto">
+                        <source src="eirini.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <h1>Will you be my Valentine? 💜</h1>
+                <p class="description">ετοιμασου για τρελα παιχνιδια</p>
+                <div class="btn-group">
+                    <button id="yesBtn" onclick="celebrate()">ΝΑΙ!</button>
+                    <button id="noBtn" onmouseover="moveNo()" onclick="moveNo()">Όχι</button>
+                </div>
+            </div>
+
+            <div id="success-section" class="hidden">
+                <div class="media-container">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3pueGtxbmZueGtxbmZueGtxbmZueGtxbmZueGtxbmZueGtxJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l41lH4ADRtAYnGsLe/giphy.gif" alt="Happy GIF">
+                </div>
+                <h1 style="color: var(--medium-purple);">εμενα με ρωτησες;;;</h1>
+                <p>πλακιτσα 🙂‍↔️</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let scale = 1;
+
+        function startApp() {
+            // Παίζει μουσική και βίντεο
+            document.getElementById('bgMusic').play().catch(e => console.log("Audio fail"));
+            document.getElementById('v-clip').play().catch(e => console.log("Video fail"));
+            
+            // Εξαφανίζει το overlay
+            document.getElementById('overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('overlay').style.display = 'none';
+                const main = document.getElementById('main-content');
+                main.style.display = 'block';
+                setTimeout(() => main.style.opacity = '1', 50);
+                setInterval(createHeart, 300);
+            }, 500);
+        }
+
+        function moveNo() {
+            // Το "ΝΑΙ" μεγαλώνει
+            scale += 0.4;
+            document.getElementById('yesBtn').style.transform = `scale(${scale})`;
+
+            // Το "Όχι" πηδάει σε τυχαία θέση
+            const noBtn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 100);
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+            noBtn.style.position = 'fixed';
+        }
+
+        function celebrate() {
+            document.getElementById('question-section').classList.add('hidden');
+            document.getElementById('success-section').classList.remove('hidden');
+            document.body.style.backgroundColor = "#e1bee7";
+            for(let i=0; i<30; i++) setTimeout(createHeart, i*100);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            const hearts = ['💜', '💖', '✨', '🌸'];
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+    </script>
+</body>
+</html>
