@@ -27,7 +27,6 @@
             position: absolute;
             top: -20px;
             font-size: 20px;
-            user-select: none;
             z-index: -1;
             animation: fall linear forwards;
         }
@@ -80,18 +79,17 @@
             margin-bottom: 20px;
             object-fit: cover;
             border: 3px solid var(--accent-pink);
-            background-color: #eee;
         }
 
         h1 { color: var(--dark-purple); margin: 10px 0; }
-        .description { color: #555; font-size: 1rem; margin-bottom: 25px; line-height: 1.4; }
+        .description { color: #555; font-size: 1rem; margin-bottom: 25px; }
 
         .btn-group {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 20px;
-            min-height: 150px; /* Χώρος για το κουμπί που μεγαλώνει */
+            min-height: 200px; /* Δίνουμε χώρο για να μεγαλώσει το ΝΑΙ */
         }
 
         button {
@@ -101,11 +99,21 @@
             font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        #yesBtn { background: #4caf50; color: white; position: relative; z-index: 10; }
-        #noBtn { background: #f44336; color: white; position: absolute; }
+        #yesBtn { 
+            background: #4caf50; 
+            color: white; 
+            position: relative; 
+            z-index: 10; 
+        }
+
+        #noBtn { 
+            background: #f44336; 
+            color: white; 
+            position: absolute; /* Απαραίτητο για να μπορεί να μετακινηθεί παντού */
+        }
 
         .hidden { display: none; }
     </style>
@@ -154,11 +162,8 @@
         let scale = 1;
 
         function startApp() {
-            // Παίζει μουσική και βίντεο
-            document.getElementById('bgMusic').play().catch(e => console.log("Audio fail"));
-            document.getElementById('v-clip').play().catch(e => console.log("Video fail"));
-            
-            // Εξαφανίζει το overlay
+            document.getElementById('bgMusic').play();
+            document.getElementById('v-clip').play();
             document.getElementById('overlay').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('overlay').style.display = 'none';
@@ -170,17 +175,25 @@
         }
 
         function moveNo() {
-            // Το "ΝΑΙ" μεγαλώνει
-            scale += 0.4;
-            document.getElementById('yesBtn').style.transform = `scale(${scale})`;
+            // 1. Το ΝΑΙ μεγαλώνει (scale)
+            scale += 0.5; 
+            const yesBtn = document.getElementById('yesBtn');
+            yesBtn.style.transform = `scale(${scale})`;
 
-            // Το "Όχι" πηδάει σε τυχαία θέση
+            // 2. Το ΟΧΙ πηδάει σε τυχαία θέση στην οθόνη
             const noBtn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - 150);
-            const y = Math.random() * (window.innerHeight - 100);
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
-            noBtn.style.position = 'fixed';
+            
+            // Υπολογίζουμε όρια για να μην βγαίνει έξω από την οθόνη
+            const padding = 50;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+            noBtn.style.position = 'fixed'; // Το κάνει να αγνοεί την κάρτα και να πάει παντού
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
         }
 
         function celebrate() {
