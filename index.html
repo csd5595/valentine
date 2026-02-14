@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Will you be my valentine ? 💜</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --dark-purple: #4a148c;
             --medium-purple: #9c27b0;
             --light-purple: #f3e5f5;
-            --soft-lavender: #e6dbff; /* Νέο ανοιχτό μωβ για το overlay */
+            --soft-lavender: #e6dbff;
             --accent-pink: #ff80ab;
             --bright-purple-yes: #9d00ff;
             --vivid-purple-no: #d883ff;
@@ -22,8 +24,10 @@
             align-items: center;
             justify-content: center;
             background-color: var(--light-purple);
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            /* Εδώ η νέα γραμματοσειρά */
+            font-family: 'Pangolin', cursive, sans-serif;
             overflow: hidden;
+            -webkit-font-smoothing: antialiased; /* Κάνει τα γράμματα πιο καθαρά στο iPhone */
         }
 
         .heart {
@@ -38,11 +42,10 @@
             to { transform: translateY(110vh) rotate(360deg); }
         }
 
-        /* Διορθωμένο Ανοιχτό Μωβ Background στην αρχή */
         #overlay {
             position: fixed;
             inset: 0;
-            background: var(--soft-lavender); /* Εδώ έγινε η αλλαγή */
+            background: var(--soft-lavender);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -100,7 +103,12 @@
             background-color: #fbfbfb;
         }
 
-        h1 { color: var(--dark-purple); margin: 5px 0; font-size: 1.6rem; }
+        h1 { 
+            color: var(--dark-purple); 
+            margin: 5px 0; 
+            font-size: 1.8rem; /* Λίγο μεγαλύτερα για να είναι ξεκάθαρα */
+            line-height: 1.2;
+        }
 
         .btn-group {
             display: flex;
@@ -113,10 +121,11 @@
         }
 
         button {
-            padding: 12px 28px;
+            padding: 14px 30px;
             border: none;
             border-radius: 50px;
-            font-size: 1.2rem;
+            font-size: 1.3rem; /* Πιο μεγάλο font στα κουμπιά */
+            font-family: 'Pangolin', cursive, sans-serif;
             font-weight: bold;
             cursor: pointer;
             color: white;
@@ -150,7 +159,7 @@
         <div class="popup-box">
             <h2 style="color: var(--dark-purple)">Αν και έχει πάει αργά, μπορώ να σε ρωτήσω κάτι;</h2>
             <p>get ready ✨</p>
-            <button onclick="startApp()" style="background: var(--bright-purple-yes); color: white;">ΝΑΙ 😍</button>
+            <button onclick="startApp()">ΝΑΙ 😍</button>
         </div>
     </div>
 
