@@ -9,10 +9,10 @@
             --dark-purple: #4a148c;
             --medium-purple: #9c27b0;
             --light-purple: #f3e5f5;
+            --soft-lavender: #e6dbff; /* Νέο ανοιχτό μωβ για το overlay */
             --accent-pink: #ff80ab;
-            /* Νέα Έντονα Μωβ Χρώματα */
-            --bright-purple-yes: #9d00ff; /* Έντονο Neon Μωβ */
-            --vivid-purple-no: #d883ff;  /* Ζωντανό Λιλά */
+            --bright-purple-yes: #9d00ff;
+            --vivid-purple-no: #d883ff;
         }
 
         body {
@@ -38,10 +38,11 @@
             to { transform: translateY(110vh) rotate(360deg); }
         }
 
+        /* Διορθωμένο Ανοιχτό Μωβ Background στην αρχή */
         #overlay {
             position: fixed;
             inset: 0;
-            background: var(--dark-purple);
+            background: var(--soft-lavender); /* Εδώ έγινε η αλλαγή */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -54,8 +55,8 @@
             padding: 30px;
             border-radius: 30px;
             text-align: center;
-            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
-            border: 5px solid var(--accent-pink);
+            box-shadow: 0 10px 50px rgba(0,0,0,0.15);
+            border: 5px solid var(--bright-purple-yes);
             width: 85%;
             max-width: 400px;
         }
@@ -100,7 +101,6 @@
         }
 
         h1 { color: var(--dark-purple); margin: 5px 0; font-size: 1.6rem; }
-        .description { color: #555; font-size: 0.95rem; margin-bottom: 15px; }
 
         .btn-group {
             display: flex;
@@ -121,7 +121,6 @@
             cursor: pointer;
             color: white;
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            /* Έντονη σκιά για να "πετάνε" τα κουμπιά */
             box-shadow: 0 6px 20px rgba(157, 0, 255, 0.3);
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
@@ -176,7 +175,6 @@
                     </video>
                 </div>
                 <h1 style="color: var(--medium-purple);">ΤΑ ΛΕΜΕ ΣΤΙΣ 8 😏</h1>
-                
             </div>
         </div>
     </div>
