@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Will you be my valentine ? 💜</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
-    
     <style>
         :root {
             --dark-purple: #4a148c;
@@ -24,10 +22,10 @@
             align-items: center;
             justify-content: center;
             background-color: var(--light-purple);
-            /* Εδώ η νέα γραμματοσειρά */
-            font-family: 'Pangolin', cursive, sans-serif;
+            /* Standard καθαρή γραμματοσειρά χωρίς "πατούρες" */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             overflow: hidden;
-            -webkit-font-smoothing: antialiased; /* Κάνει τα γράμματα πιο καθαρά στο iPhone */
+            -webkit-font-smoothing: antialiased;
         }
 
         .heart {
@@ -106,7 +104,8 @@
         h1 { 
             color: var(--dark-purple); 
             margin: 5px 0; 
-            font-size: 1.8rem; /* Λίγο μεγαλύτερα για να είναι ξεκάθαρα */
+            font-size: 1.6rem; 
+            font-weight: 800; /* Έντονα γράμματα για να είναι ξεκάθαρα */
             line-height: 1.2;
         }
 
@@ -124,8 +123,9 @@
             padding: 14px 30px;
             border: none;
             border-radius: 50px;
-            font-size: 1.3rem; /* Πιο μεγάλο font στα κουμπιά */
-            font-family: 'Pangolin', cursive, sans-serif;
+            font-size: 1.2rem;
+            /* Standard γραμματοσειρά και στα κουμπιά */
+            font-family: inherit;
             font-weight: bold;
             cursor: pointer;
             color: white;
@@ -158,7 +158,7 @@
     <div id="overlay">
         <div class="popup-box">
             <h2 style="color: var(--dark-purple)">Αν και έχει πάει αργά, μπορώ να σε ρωτήσω κάτι;</h2>
-            <p>get ready ✨</p>
+            <p style="font-weight: 600;">get ready ✨</p>
             <button onclick="startApp()">ΝΑΙ 😍</button>
         </div>
     </div>
